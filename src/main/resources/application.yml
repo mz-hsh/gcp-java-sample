@@ -13,5 +13,5 @@ spring:
   cloud:
     gcp:
       sql:
-        instance-connection-name: pentacle-practice:us-central1:hsh-mysql
+        instance-connection-name: pentacle-practice:asia-northeast1:hsh-sql
         database-name: hsh
