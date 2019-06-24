@@ -1,0 +1,8 @@
+gcs-resource-post-bucket: ${POST_BUCKET:}
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10485760
+  jpa:
+    open-in-view: false
