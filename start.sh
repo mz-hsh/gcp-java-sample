@@ -6,7 +6,7 @@ GIT_REPO=$(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/
 
 # Install dependencies from apt
 apt-get update
-apt-get install -t jessie-backports -yq openjdk-8-jdk git
+apt-get install -yq openjdk-8-jdk git
 
 git clone ${GIT_REPO} app
 cd app
