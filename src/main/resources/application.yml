@@ -6,3 +6,12 @@ spring:
       max-file-size: 10485760
   jpa:
     open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL55Dialect
+  datasource:
+    username: hsh
+    
+  cloud:
+    gcp:
+      sql:
+        instance-connection-name: pentacle-practice:us-central1:hsh-mysql
+        database-name: hsh

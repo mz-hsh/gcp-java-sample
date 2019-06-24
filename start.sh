@@ -11,9 +11,15 @@ echo "GIT_REPO: ${GIT_REPO}"
 apt-get update
 apt-get install -yq openjdk-8-jdk git
 
+if [ -d app ]
+then
+  rm -rf app
+  rm app.jar
+fi
+
 git clone ${GIT_REPO} app
 cd app
 ./gradlew build
 mv ./build/libs/*.jar ./app.jar
 
-java -jar ./app.jar
+java -jar ./app.jar --server.port=80
