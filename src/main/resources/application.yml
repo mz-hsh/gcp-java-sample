@@ -7,6 +7,8 @@ spring:
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL55Dialect
+    hibernate:
+      ddl-auto: create-drop
   datasource:
     username: hsh
     
