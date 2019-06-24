@@ -1,4 +1,4 @@
-gcs-resource-post-bucket: ${POST_BUCKET:}
+gcs-resource-post-bucket: ${BUCKET:}
 
 spring:
   servlet:
