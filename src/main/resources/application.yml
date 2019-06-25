@@ -10,10 +10,10 @@ spring:
     hibernate:
       ddl-auto: create-drop
   datasource:
-    username: hsh
+    username: ${DB_USERNAME}
     
   cloud:
     gcp:
       sql:
-        instance-connection-name: pentacle-practice:asia-northeast1:hsh-sql
-        database-name: hsh
+        instance-connection-name: ${DB_INSTANCE_CONNECTION_NAME}
+        database-name: ${DB_DATABASE_NAME}

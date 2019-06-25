@@ -10,11 +10,30 @@
 <body>
 	<div id="app" class="container">
 		<div class="row">
-			<input type="text" v-model="post.title" placeholder="Title">
-			<input type="text" v-model="post.content" placeholder="Content">
-			<input type="file">
-			<button type="button" class="btn" @click="save">등록</button>
+			<h4>Posts</h4>
 		</div>
+		<form id="form">
+			<div class="row">
+				<div class="col s6">
+					<input type="text" name="title" placeholder="Title">
+				</div>
+				<div class="col s6">
+					<input type="text" name="content" placeholder="Content">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s6">
+					<input type="file" name="file">
+				</div>
+				<div class="col s6 right-align">
+					<button type="button" class="btn" @click="save">등록</button>
+				</div>
+			</div>
+		</form>
+		<div class="progress" v-show="!loaded">
+			<div class="indeterminate"></div>
+		</div>
+		<hr>
 		<div class="row">
 			<table class="highlight">
 				<thead>
@@ -23,6 +42,7 @@
 						<th scope="col">Title</th>
 						<th scope="col">Content</th>
 						<th scope="col">File</th>
+						<th scope="col">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -30,7 +50,8 @@
 						<td>{{ post.id }}</td>
 						<td>{{ post.title }}</td>
 						<td>{{ post.content }}</td>
-						<td>{{ post.originalFilename }}</td>
+						<td><a :href="`/posts/download/${post.filename}`" target="_blank">{{ post.originalFilename }}</a></td>
+						<td><button type="button" class="btn" @click="deletePost(post.id)">삭제</td>
 					</tr>
 				</tbody>
 			</table>
@@ -44,30 +65,33 @@
 		new Vue({
 			el: '#app',
 			data: {
-				post: {
-					title: '',
-					content: '',
-				},
+				loaded: true,
+				file: '',
 				posts: []
 			},
 			methods: {
 				async save() {
-					let formData = new FormData();
-					formData.append('file', document.querySelector('#app input[type="file"]').files[0])
-					formData.append('title', this.post.title)
-					formData.append('content', this.post.content)
-
+					let form = document.querySelector('#form')
+					let formData = new FormData(form);
+					
+					this.loaded = false
 					try {
 						await axios.post('/posts', formData)
 						this.fetchPosts()
+						form.reset()
 					} catch (e) {
 						alert(e)
 					}
+					this.loaded = true
 				},
 				fetchPosts() {
 					axios.get('/posts').then(({ data }) => {
 						this.posts = data
 					})
+				},
+				deletePost(id) {
+					if (!confirm('삭제하시겠습니까?')) return
+					axios.delete('/posts/' + id).then(this.fetchPosts)
 				}
 			},
 			created() {
