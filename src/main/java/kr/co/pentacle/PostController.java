@@ -35,7 +35,7 @@ public class PostController {
 	
 	@PostMapping
 	public Post post(@RequestParam(name = "file", required = false) MultipartFile file, @Valid Post post) throws IOException {
-		if (file != null) {
+		if (file != null && !file.getOriginalFilename().equals("")) {
 			log.info("originalFilename: {}", file.getOriginalFilename());
 			log.info("size: {}", file.getSize());
 			log.info("contentType: {}", file.getContentType());
