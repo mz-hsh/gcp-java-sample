@@ -1,15 +1,15 @@
 package kr.co.pentacle;
 
 import java.io.IOException;
-import java.io.InputStream;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageService {
 
-	String create(String name, String contentType, InputStream content);
-	
-	String create(String name, String contentType, byte[] bytes) throws IOException;
+	String store(MultipartFile file);
 	
 	boolean delete(String filename) throws IOException;
 	
 	String createSignedUrl(String filename) throws IOException;
+	
 }

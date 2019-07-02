@@ -34,21 +34,15 @@ public class PostController {
 	}
 	
 	@PostMapping
-	public Post post(@RequestParam(name = "file", required = false) MultipartFile file, @Valid Post post) throws IOException {
+	public Post post(@RequestParam(name = "file", required = false) MultipartFile file, @Valid Post post) {
 		if (file != null && !file.getOriginalFilename().equals("")) {
-			log.info("originalFilename: {}", file.getOriginalFilename());
-			log.info("size: {}", file.getSize());
-			log.info("contentType: {}", file.getContentType());
-			
-			String filename = storageService.create(file.getOriginalFilename(), file.getContentType(), file.getBytes());
+			String filename = storageService.store(file);
 			
 			post.setFilename(filename);
 			post.setOriginalFilename(file.getOriginalFilename());
 		}
 		
-		postService.save(post);
-		
-		return post;
+		return postService.save(post);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -59,7 +53,7 @@ public class PostController {
 					storageService.delete(post.getFilename());
 				}
 			} catch (IOException e) {
-				log.error("Delete Storage fail.", e);
+				log.error("Failed to delete file " + post.getFilename(), e);
 			}
 		});
 		
