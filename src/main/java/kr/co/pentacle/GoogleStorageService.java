@@ -70,13 +70,19 @@ public class GoogleStorageService implements StorageService {
 		
 		try (OutputStream os = resource.getOutputStream()) {
 			os.write(file.getBytes());
+			os.flush();
 			
-			// Setting contentType
-			resource.getBlob().toBuilder().setContentType(file.getContentType()).build().update();
+			
 		} catch (IOException e) {
 			throw new StorageException("Failed to store file " + filename);
 		}
 		
+		// Setting contentType
+		try {
+			resource.getBlob().toBuilder().setContentType(file.getContentType()).build().update();
+		} catch (IOException e) {
+			throw new StorageException("Failed to set contentType " + filename);
+		}
 		
 		return filename;
 	}
