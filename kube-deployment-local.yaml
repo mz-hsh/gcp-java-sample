@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hsh-java-sample
+spec:
+  selector:
+    matchLabels:
+      app: hsh-java-sample
+  template:
+    metadata:
+      labels:
+        app: hsh-java-sample
+    spec:
+      containers:
+      - name: hsh-java-sample
+        image: hsh891230/hsh-gcp-java-sample:1
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: gcp-key
+          mountPath: "/key"
+          readOnly: true
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: "/key/pentacle-practice-bc9677900a95.json"
+        - name: BUCKET
+          value: hsh-bucket
+      volumes:
+      - name: gcp-key
+        # configMap:
+        #   name: gcp-service-account-key
+        secret:
+          secretName: gcp-service-account-key
