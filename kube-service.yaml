@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hsh-java-sample-service
+  name: gcp-java-sample-service
   labels:
-    app: hsh-java-sample
+    app: gcp-java-sample
 spec:
   type: LoadBalancer
   selector:
-    app: hsh-java-sample
+    app: gcp-java-sample
   ports:
     - port: 80
       targetPort: 8080

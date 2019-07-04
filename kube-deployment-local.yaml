@@ -1,19 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hsh-java-sample
+  name: gcp-java-sample
 spec:
   selector:
     matchLabels:
-      app: hsh-java-sample
+      app: gcp-java-sample
   template:
     metadata:
       labels:
-        app: hsh-java-sample
+        app: gcp-java-sample
     spec:
       containers:
-      - name: hsh-java-sample
-        image: hsh891230/hsh-gcp-java-sample:1
+      - name: gcp-java-sample
+        image: hsh891230/gcp-java-sample:v1
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "512Mi"
